@@ -6,14 +6,6 @@ import android.view.View;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
-    /*
-    int playerOneScore = 0;
-    int playerTwoScore = 0;
-    int playerOneGames = 0;
-    int playerTwoGames = 0;
-    boolean playerOneAdv = false;
-    boolean playerTwoAdv = false;
-    */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,8 +13,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
-    Player playerOne = new Player("Bob");
-    Player playerTwo = new Player("Jim");
+    Player playerOne = new Player("Player 1");
+    Player playerTwo = new Player("Player 2");
 
     public void scoreP1 (View view){
         scorePoint(playerOne, playerTwo);
@@ -30,6 +22,14 @@ public class MainActivity extends AppCompatActivity {
 
     public void scoreP2 (View view){
         scorePoint(playerTwo, playerOne);
+    }
+
+    public void gameP1 (View view){
+        gameForPlayer(playerOne);
+    }
+
+    public void gameP2 (View view){
+        gameForPlayer(playerTwo);
     }
 
     public void scorePoint (Player currentPlayer, Player otherPlayer){
@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
                     displayAdvantage(currentPlayer);
                     return;
                 }
-            resetGame();
+                resetGame();
                 gameForPlayer(currentPlayer);
         } else {
             resetGame();
@@ -67,162 +67,72 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void displayAdvantage(Player player){
-        if (player.getName().equals("PlayerOne")) {
-            displayAdvantageForPlayerOne("Adv");
+        if (player == playerOne) {
+            displayAdvantage("Adv", R.id.player_1_score);
         }else
-        if (player.getName().equals("PlayerTwo")){
-            displayAdvantageForPlayerTwo("Adv");
-        }
+            if (player == playerTwo){
+                displayAdvantage("Adv", R.id.player_2_score);
+            }
     }
 
     public void displayForPlayer(Player player){
         if (player == playerOne) {
             displayForPlayer(player.getScore(), R.id.player_1_score);
         }else
-        if (player == playerTwo){
-            displayForPlayer(player.getScore(), R.id.player_2_score);
-        }
+            if (player == playerTwo){
+                displayForPlayer(player.getScore(), R.id.player_2_score);
+            }
     }
 
     public void gameForPlayer(Player player) {
         player.setGameScore(1);
-        if (player.getName().equals("PlayerOne")) {
-            displayGamesForPlayerOne(player.getGameScore());
+        if (player == playerOne) {
+            displayGames(player.getGameScore(), R.id.player_1_games);
         }else
-        if (player.getName().equals("PlayerTwo")){
-            displayGamesForPlayerTwo(player.getGameScore());
-        }
+            if (player == playerTwo){
+                displayGames(player.getGameScore(), R.id.player_2_games);
+            }
     }
-
-
 
     public void displayForPlayer(int score, int viewId) {
         TextView scoreView = (TextView) findViewById(viewId);
         scoreView.setText(String.valueOf(score));
     }
 
-    public void displayAdvantageForPlayerOne(String score) {
-        TextView scoreView = (TextView) findViewById(R.id.player_1_score);
+    public void displayAdvantage(String score, int viewId) {
+        TextView scoreView = (TextView) findViewById(viewId);
         scoreView.setText(String.valueOf(score));
     }
 
-    public void displayGamesForPlayerOne(int score) {
+    public void displayGames(int score, int viewId) {
         String games = "Games: " + score;
-        TextView scoreView = (TextView) findViewById(R.id.player_1_games);
+        TextView scoreView = (TextView) findViewById(viewId);
         scoreView.setText(String.valueOf(games));
     }
 
-
-    public void displayAdvantageForPlayerTwo(String score) {
-        TextView scoreView = (TextView) findViewById(R.id.player_2_score);
-        scoreView.setText(String.valueOf(score));
+    public void displayAll(){
+        displayForPlayer(playerOne);
+        displayForPlayer(playerTwo);
+        displayGames(playerOne.getGameScore(), R.id.player_1_games);
+        displayGames(playerTwo.getGameScore(), R.id.player_2_games);
     }
-
-    public void displayGamesForPlayerTwo(int score) {
-        String games = "Games: " + score;
-        TextView scoreView = (TextView) findViewById(R.id.player_2_games);
-        scoreView.setText(String.valueOf(games));
-    }
-
-    /*
-    public void pointPlayerOne(View view) {
-        if (playerOneScore == 0 || playerOneScore == 15) {
-            playerOneScore += 15;
-        } else
-            if (playerOneScore == 30) {
-                playerOneScore += 10;
-        } else
-            if (playerOneScore == 40) {
-                if (playerOneAdv) {
-                    resetGame();
-                    gamePlayerOne();
-                    displayForPlayer(playerOneScore);
-                    return;
-            }
-            if (playerTwoScore == 40) {
-                if (playerTwoAdv) {
-                    playerTwoAdv = false;
-                    displayForPlayerTwo(playerTwoScore);
-                    return;
-                }
-                playerOneAdv = true;
-                displayAdvantageForPlayerOne("Adv");
-                return;
-            }
-            resetGame();
-            gamePlayerOne();
-        } else {
-            resetGame();
-            gamePlayerOne();
-        }
-
-        displayForPlayer(playerOneScore);
-
-    }
-*/
-
-
-
-
-/*
-    public void pointPlayerTwo(View view) {
-        if (playerTwoScore == 0 || playerTwoScore == 15) {
-            playerTwoScore += 15;
-        } else if (playerTwoScore == 30) {
-            playerTwoScore += 10;
-        } else if (playerTwoScore == 40) {
-            if (playerTwoAdv) {
-                resetGame();
-                gamePlayerTwo();
-                displayForPlayerTwo(playerTwoScore);
-                return;
-            }
-            if (playerOneScore == 40) {
-                if (playerOneAdv) {
-                    playerOneAdv = false;
-                    displayForPlayer(playerOneScore);
-                    return;
-                }
-                playerTwoAdv = true;
-                displayAdvantageForPlayerTwo("Adv");
-                return;
-            }
-            resetGame();
-            gamePlayerTwo();
-        } else {
-            resetGame();
-            gamePlayerTwo();
-        }
-
-        displayForPlayerTwo(playerTwoScore);
-
-    }
-
-    public void gamePlayerTwo() {
-        playerTwoGames++;
-        displayGamesForPlayerTwo(playerTwoGames);
-    }
-*/
 
     public void resetScore(View view) {
         playerOne.resetGame();
         playerTwo.resetGame();
-        displayForPlayer(playerOne.getScore(), R.id.player_1_score);
-        displayForPlayer(playerTwo.getScore(), R.id.player_2_score);
+        displayAll();
     }
 
     public void resetGame() {
         playerOne.resetGame();
         playerTwo.resetGame();
-        displayForPlayer(playerOne.getScore(), R.id.player_1_score);
-        displayForPlayer(playerTwo.getScore(), R.id.player_2_score);
+        displayAll();
     }
 
     public void resetMatch(View view) {
         playerOne.resetMatch();
         playerTwo.resetMatch();
-        displayForPlayer(playerOne.getScore(), R.id.player_1_score);
-        displayForPlayer(playerTwo.getScore(), R.id.player_2_score);
+        displayAll();
     }
 
 }

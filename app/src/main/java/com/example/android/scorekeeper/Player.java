@@ -26,17 +26,12 @@ public class Player{
         playerScore += add;
     }
 
-
     public int getGameScore(){
         return playerGameScore;
     }
 
     public void setGameScore(int add){
         playerGameScore += add;
-    }
-
-    public void displayGameScore(){
-
     }
 
     public boolean getAdv(){
@@ -56,9 +51,7 @@ public class Player{
         playerGameScore = 0;
         playerScore = 0;
         hasAdvantage = false;
-
     }
-
 
 }
 
