@@ -21,8 +21,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
-    Player playerOne = new Player("PlayerOne");
-    Player playerTwo = new Player("PlayerTwo");
+    Player playerOne = new Player("Bob");
+    Player playerTwo = new Player("Jim");
 
     public void scoreP1 (View view){
         scorePoint(playerOne, playerTwo);
